@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LY Company Group — Organigramma 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#F4F6FB;color:#1B3A6B;min-height:100vh}
+
+/* HEADER */
+header{background:#1B3A6B;padding:14px 24px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(27,58,107,.35)}
+.logo{font-size:20px;font-weight:700;color:#fff;letter-spacing:1px;flex-shrink:0}.logo span{color:#F4B942}
+.sw{flex:1;max-width:400px;position:relative}
+#search{width:100%;padding:8px 14px 8px 34px;border-radius:8px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.13);color:#fff;font-size:14px;outline:none;transition:.2s}
+#search::placeholder{color:rgba(255,255,255,.45)}
+#search:focus{border-color:rgba(255,255,255,.75);background:rgba(255,255,255,.2)}
+.si{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.6;pointer-events:none}
+.tot{color:rgba(255,255,255,.5);font-size:12px;margin-left:auto;white-space:nowrap}
+
+/* SEARCH DROPDOWN */
+#sdrop{position:absolute;top:calc(100%+4px);left:0;right:0;background:#fff;border-radius:10px;border:1px solid #DDE5F3;box-shadow:0 8px 24px rgba(27,58,107,.15);max-height:320px;overflow-y:auto;display:none;z-index:300}
+#sdrop.open{display:block}
+.si-item{padding:10px 14px;cursor:pointer;display:flex;gap:10px;align-items:center;border-bottom:.5px solid #EEF2FA}
+.si-item:last-child{border-bottom:none}.si-item:hover{background:#EBF3FC}
+.si-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:11px;flex-shrink:0}
+.si-nm{font-size:13px;font-weight:500;color:#1B3A6B}.si-mt{font-size:11px;color:#6B8BAF}
+
+/* BACK BAR — fixed, prominent */
+#backbar{display:none;align-items:center;gap:10px;padding:0 24px;height:46px;background:#fff;border-bottom:1.5px solid #DDE5F3;position:sticky;top:57px;z-index:150;cursor:pointer;transition:.15s}
+#backbar:hover{background:#EBF3FC}
+#backbar.show{display:flex}
+.bb-arrow{width:30px;height:30px;border-radius:50%;background:#EBF3FC;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:.15s}
+#backbar:hover .bb-arrow{background:#1B3A6B;color:#fff}
+.bb-txt{font-size:13px;font-weight:500;color:#2E5FA3}.bb-sub{font-size:11px;color:#6B8BAF;margin-left:4px}
+
+/* MAIN */
+#ov{padding:24px;max-width:900px;margin:0 auto}
+
+/* CONNECTOR */
+.conn{width:2px;height:22px;background:#BDD7EE;margin:0 auto}
+
+/* CARDS */
+.card{background:#fff;border-radius:12px;border:1px solid #DDE5F3;padding:14px 16px;transition:.15s;user-select:none}
+
+/* boss card */
+.boss-wrap{display:flex;justify-content:center;margin-bottom:0}
+.boss-c{max-width:280px;width:100%;cursor:pointer;position:relative;opacity:.75}
+.boss-c:hover{opacity:1;border-color:#4A90D9;box-shadow:0 4px 12px rgba(74,144,217,.12);transform:translateY(-1px)}
+.up-hint{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#4A90D9;color:#fff;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap;pointer-events:none;opacity:0;transition:.15s}
+.boss-c:hover .up-hint{opacity:1}
+
+/* focus card */
+.focus-c{border:2px solid #1B3A6B;box-shadow:0 6px 24px rgba(27,58,107,.12);cursor:default}
+.focus-c:hover{border-color:#1B3A6B;box-shadow:0 6px 24px rgba(27,58,107,.12);transform:none}
+
+/* team cards */
+.tgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.tc{padding:12px 14px;cursor:pointer}
+.tc:hover{border-color:#4A90D9;box-shadow:0 3px 10px rgba(74,144,217,.12);transform:translateY(-1px)}
+
+/* card internals */
+.ch{display:flex;align-items:flex-start;gap:10px;margin-bottom:6px}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0}
+.cn{font-size:13px;font-weight:600;color:#1B3A6B;line-height:1.3}
+.cr{font-size:11px;color:#6B8BAF;margin-top:3px;line-height:1.4}
+.cp{font-size:11px;color:#2E5FA3;margin-top:5px;font-weight:500}
+.crsec{font-size:12px;color:#3A567A;line-height:1.6;margin-top:10px;padding-top:10px;border-top:.5px solid #EEF2FA}
+.rip{margin-top:8px;font-size:12px;color:#6B8BAF}
+.rip strong{color:#1B3A6B}
+
+/* section label */
+.tl{font-size:12px;font-weight:600;color:#2E5FA3;margin:4px 0 8px;display:flex;align-items:center;gap:6px}
+.tc-n{background:#EBF3FC;color:#2E5FA3;border-radius:10px;padding:1px 7px;font-size:11px;font-weight:500}
+
+@media(max-width:600px){#ov{padding:12px}.tgrid{grid-template-columns:1fr}#backbar{padding:0 14px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">LY<span>.</span></div>
+  <div class="sw">
+    <span class="si">&#128269;</span>
+    <input type="text" id="search" placeholder="Cerca nome o ruolo..." autocomplete="off">
+    <div id="sdrop"></div>
+  </div>
+  <div class="tot" id="tot"></div>
+</header>
+
+<!-- Back bar — appears when NOT at top level -->
+<div id="backbar">
+  <div class="bb-arrow">&#8592;</div>
+  <div>
+    <span class="bb-txt" id="bb-name"></span>
+    <span class="bb-sub" id="bb-role"></span>
+  </div>
+</div>
+
+<div id="ov"></div>
+
+<script>
+/* ══════════════════════════════ DATA ══════════════════════════════ */
+const RAW=[
+["Curro","CEO / Presidente","1. Direzione Generale","🌐 GLOBAL","C-Level","Governance finale del gruppo, investor relations, decisioni straordinarie","—",1],
+["Christian Creati","COO Global","1. Direzione Generale","🌐 GLOBAL","C-Level","Supervisione operativa globale — tutti i L3 riportano al COO","CEO",2],
+["Juan Ramon Ugarte","CMO (Consulente CEO)","1. Direzione Generale","🌐 GLOBAL","Consulente","Supporto strategico marketing e sales — siede nel Board","CEO",2],
+["Alfonso Roldan","CFO","1. Direzione Generale","🌐 GLOBAL","C-Level","P&L consolidato, debt management, cash flow, pool bancario","COO",3],
+["Mayte Bernal","CQO — Audit Indipendente","1bis. Global non executive","🌐 GLOBAL","Indipendente","Audit qualità indipendente ogni 4 mesi","COO",3],
+["Antonio Cordoba","Dir. Comm. Spain + Digital Transformation + IT interim","1bis. Global non executive","🇪🇸 ESP","Manager","Revenue Spagna, coordinamento digitale cross-paese, IT interim fino a fine anno","COO",3],
+["Federico Ragusa","Dir. Commerciale EMEA / ITA","2. Commerciale — Sales","🌐 GLOBAL","Manager","Revenue ITA + EMEA/ROW — gestione KAM, forecast, pricing","COO",3],
+["Francisco Suarez","Dir. Commerciale LATAM","2. Commerciale — Sales","🌐 GLOBAL","Manager","Revenue CARIBE + MEX + USA — gestione team, forecast, pricing","COO",3],
+["Riccardo Liverani","MD Italia","4. Operations & Supply Chain","🇮🇹 ITA","Director","Coordinamento produzione, logistica, acquisti ITA","COO",3],
+["Francisco Leal (Paco)","MD Spagna","4. Operations & Supply Chain","🇪🇸 ESP","Director","Coordinamento produzione, logistica, acquisti ESP","COO",3],
+["Luis Prieto","MD Caribe","4. Operations & Supply Chain","🏝 CARIBE","Director","Coordinamento produzione, logistica, acquisti CARIBE","COO",3],
+["Carlotta Manicardi","Trade Marketing / Marketing Strategy","3. Marketing","🌐 GLOBAL","Manager","Analisi mercato, strategia campagne, supervisione dipartimento","COO",4],
+["Alice Garau","ESG / Sustainability Manager","10. Sostenibilità & ESG","🌐 GLOBAL","Manager","Report sostenibilità, certificazioni green, impatto ambientale","COO",4],
+["Mattia Longhin","KAM / Resp. Commerciale ITA","2. Commerciale — Sales","🇮🇹 ITA","Senior Staff","Revenue clienti strategici ITA, margine, cobros","Dir. Comm. EMEA/ITA",4],
+["Elvis Venturini","Commerciale di Territorio","2. Commerciale — Sales","🇮🇹 ITA","Staff","Acquisizione nuovi clienti, gestione portafoglio ITA","KAM ITA",5],
+["Sofia Vittorelli","Commerciale di Territorio","2. Commerciale — Sales","🇮🇹 ITA","Staff","Acquisizione nuovi clienti, gestione portafoglio ITA","KAM ITA",5],
+["Vincenzo di Martino","Commerciale di Territorio","2. Commerciale — Sales","🇮🇹 ITA","Staff","Acquisizione nuovi clienti, gestione portafoglio ITA","KAM ITA",5],
+["Maria Dueñas","Commerciale di Territorio","2. Commerciale — Sales","🇪🇸 ESP","Staff","Acquisizione nuovi clienti, gestione portafoglio ESP","Dir. Comm. Spain",5],
+["Frank Saint-Victor","Commerciale di Territorio","2. Commerciale — Sales","🇪🇸 ESP","Staff","Acquisizione nuovi clienti, gestione portafoglio ESP","Dir. Comm. Spain",5],
+["Pablo Rivera","Commerciale di Territorio","2. Commerciale — Sales","🏝 CARIBE","Staff","Acquisizione nuovi clienti, gestione portafoglio CARIBE","Dir. Comm. LATAM",5],
+["Lisa Garcia","Commerciale di Territorio","2. Commerciale — Sales","🏝 CARIBE","Staff","Acquisizione nuovi clienti, gestione portafoglio CARIBE","Dir. Comm. LATAM",5],
+["F. Ayala Tejeda","Commerciale di Territorio","2. Commerciale — Sales","🌎 MEX","Staff","Acquisizione nuovi clienti, gestione portafoglio MEX","Dir. Comm. LATAM",5],
+["Francesca Mele","Commerciale di Territorio","2. Commerciale — Sales","🌍 EMEA/ROW","Staff","Commerciale Benelux","Dir. Comm. EMEA/ITA",5],
+["Justine Junion","Commerciale di Territorio","2. Commerciale — Sales","🌍 EMEA/ROW","Staff","Commerciale Francia","Dir. Comm. EMEA/ITA",5],
+["Sara","Inside Sales","2. Commerciale — Sales","🇮🇹 ITA","Staff","Prospezione, lead qualificati, supporto al sales","KAM ITA",5],
+["Martina (Inside Sales)","Inside Sales","2. Commerciale — Sales","🇮🇹 ITA","Staff","Prospezione, lead qualificati, supporto al sales","KAM ITA",5],
+["Yanara","Inside Sales","2. Commerciale — Sales","🇪🇸 ESP","Staff","Prospezione, lead qualificati, supporto al sales","Dir. Comm. Spain",5],
+["Carolina","Inside Sales","2. Commerciale — Sales","🇪🇸 ESP","Staff","Prospezione, lead qualificati, supporto al sales","Dir. Comm. Spain",5],
+["Emiliano Diaz","Inside Sales + BO + Log + CS","2. Commerciale — Sales","🌎 MEX","Staff","Presidia 5 funzioni su MEX","Dir. Comm. LATAM",5],
+["Chiara Benedetti","Back Office Commerciale","2. Commerciale — Sales","🇮🇹 ITA","Staff","Gestione ordini, CRM, supporto al sales","KAM ITA",5],
+["Vanessa","Back Office Commerciale","2. Commerciale — Sales","🇪🇸 ESP","Staff","Gestione ordini, CRM, supporto al sales","Dir. Comm. Spain",5],
+["Monica Aragones","Back Office + Customer Service","2. Commerciale — Sales","🇪🇸 ESP","Staff","Gestione ordini + CS ESP","Dir. Comm. Spain",5],
+["Carlo Borraccino","Back Office Commerciale","2. Commerciale — Sales","🌍 EMEA/ROW","Staff","Gestione ordini, CRM, supporto al sales","Dir. Comm. EMEA/ITA",5],
+["Simona Ceroni","Customer Service / Ordini","2. Commerciale — Sales","🇮🇹 ITA","Staff","Ricezione ordini, comunicazione spedizioni, gestione reclami","KAM ITA",5],
+["Ana Cano","Customer Service + Logistica","2. Commerciale — Sales","🇪🇸 ESP","Staff","CS ESP + logistica","Dir. Comm. Spain",5],
+["Anyeli Andarcia","Customer Service + Logistica","2. Commerciale — Sales","🏝 CARIBE","Staff","CS CARIBE + logistica","Dir. Comm. LATAM",5],
+["Azzurra Scalorbi","Campaign Manager & Lead Acquisition","3. Marketing","🌐 GLOBAL","Staff","Campagne Meta/Google/LinkedIn, pipeline HubSpot","Trade Marketing",5],
+["Martina (Brand)","Brand & Content / Comunicazione","3. Marketing","🌐 GLOBAL","Staff","Grafiche digitali, sito, newsletter, social","Trade Marketing",5],
+["Sheila","Brand & Content / Graphic Design","3. Marketing","🌐 GLOBAL","Staff","Designer principale: dossier, brochure, kit, fiera","Trade Marketing",5],
+["Javier","Fiere & Distributori","3. Marketing","🌐 GLOBAL","Staff","Fiere, gestione distributori","Trade Marketing",5],
+["Loris Ori","Packaging Specialist","3. Marketing","🇮🇹 ITA","Staff","Packaging prodotti ITA e internazionale","Trade Marketing",5],
+["Anna","Packaging Freelance","3. Marketing","🌐 GLOBAL","Freelance","Supporto packaging ITA e internazionale","Trade Marketing",5],
+["Marité T.","Packaging Specialist","3. Marketing","🇪🇸 ESP","Staff","Packaging ESP + LATAM + MEX","Trade Marketing",5],
+["Alicia M.","Packaging Specialist","3. Marketing","🇪🇸 ESP","Staff","Packaging ESP + LATAM + MEX","Trade Marketing",5],
+["Alejandra","Packaging & Social Media","3. Marketing","🇪🇸 ESP","Freelance","Packaging ESP + social media spagnolo","Trade Marketing",5],
+["Bianca Billi","Pianificazione Produzione & Acquisti","4. Operations & Supply Chain","🇮🇹 ITA","Senior Staff","Piano produzione, approvvigionamenti, gestione stock ITA","MD Italia",4],
+["Bianca Billi","Logistica Internazionale","4. Operations & Supply Chain","🇮🇹 ITA","Staff","Gestione spedizioni internazionali, dogane, incoterms","MD Italia",4],
+["Mario","Pianificazione Produzione / Control Stock","4. Operations & Supply Chain","🇪🇸 ESP","Staff","Pianificazione e controllo stock ESP","MD Spagna",4],
+["Ivan Martin","Pianificazione Produzione & Acquisti","4. Operations & Supply Chain","🇪🇸 ESP","Staff","Pianificazione + Acquisti ESP in formazione","MD Spagna",4],
+["Juan Leiva","Pianificazione Produzione & Acquisti","4. Operations & Supply Chain","🇪🇸 ESP","Senior Staff","Pianificazione + Acquisti ESP","MD Spagna",4],
+["Adrhian Pinales","Pianificazione Produzione & Acquisti","4. Operations & Supply Chain","🏝 CARIBE","Senior Staff","Piano produzione, approvvigionamenti CARIBE","MD Caribe",4],
+["Gabriele Rubertucci","Resp. Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Senior Staff","Gestione linee produzione ITA, efficienza OEE","MD Italia",4],
+["Daniel Cobo","Resp. Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Senior Staff","Gestione linee produzione ESP, efficienza OEE","MD Spagna",4],
+["Jairo Adon","Resp. Produzione + Manutenzione","4. Operations & Supply Chain","🏝 CARIBE","Senior Staff","Gestione linee produzione + manutenzione CARIBE","MD Caribe",4],
+["Enrico Limoncini","Resp. Qualità & IFS/ISO","4. Operations & Supply Chain","🇮🇹 ITA","Senior Staff","Presidio sistema qualità, certificazioni IFS/ISO, HACCP","MD Italia",4],
+["Rebeca Pelez","Resp. Qualità & IFS/ISO","4. Operations & Supply Chain","🇪🇸 ESP","Senior Staff","Presidio sistema qualità, certificazioni IFS/ISO, HACCP","MD Spagna",4],
+["Ennis Caro","Resp. Qualità & IFS/ISO","4. Operations & Supply Chain","🏝 CARIBE","Senior Staff","Presidio sistema qualità, certificazioni IFS/ISO, HACCP","MD Caribe",4],
+["Laura Medina","Logistica","4. Operations & Supply Chain","🇮🇹 ITA","Staff","Pianificazione trasporti, coordinamento spedizioni ITA","MD Italia",4],
+["Sofia Zaldivar","Logistica","4. Operations & Supply Chain","🇪🇸 ESP","Staff","Pianificazione trasporti, coordinamento spedizioni ESP","MD Spagna",4],
+["Federico Barinelli","Logistica","4. Operations & Supply Chain","🇪🇸 ESP","Staff","Pianificazione trasporti, coordinamento spedizioni ESP","MD Spagna",4],
+["Pablo Rivera","Logistica Internazionale","4. Operations & Supply Chain","🏝 CARIBE","Staff","Gestione spedizioni internazionali CARIBE","MD Caribe",4],
+["Carlo Borraccino","Logistica Internazionale","4. Operations & Supply Chain","🌍 EMEA/ROW","Staff","Gestione spedizioni internazionali ROW","MD",4],
+["Antonella Frassinetti","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Cinzia Diani","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Elisa Mercatali","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Linda Bernasconi","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Samuela Pieli","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Elisa Loli","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Danila Ciani","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Stefania Scalini","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Lindita Meshkai","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Elena Malavolti","Operatore Produzione","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Operatività linee produzione","Resp. Produzione ITA",5],
+["Pepi","Supervisore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Supervisione turno produzione ESP","Resp. Produzione ESP",5],
+["Javi","Supervisore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Supervisione turno produzione ESP","Resp. Produzione ESP",5],
+["Silvia","Supervisore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Supervisione turno produzione ESP","Resp. Produzione ESP",5],
+["Ricardo","Supervisore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Supervisione turno produzione ESP","Resp. Produzione ESP",5],
+["Lorena","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Cinthya","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Juan","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Patricia","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Tetiana","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Mónica","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Diego (op.)","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Stephanny","Operatore Produzione","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Operatività linee produzione","Resp. Produzione ESP",5],
+["Luis Angel (Luis De Los Santos)","Operatore Produzione","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Operatività linee produzione","Resp. Produzione CARIBE",5],
+["Abraham Franco Magallanez","Operatore Produzione","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Operatività linee produzione","Resp. Produzione CARIBE",5],
+["Estevan Jesús Hernandez","Operatore Produzione","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Operatività linee produzione","Resp. Produzione CARIBE",5],
+["Romy J. Cabral","Operatore Produzione","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Operatività linee produzione","Resp. Produzione CARIBE",5],
+["Ricardo Castillo","Supervisore / Operatore Produzione","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Operatività + supervisione 2° turno CARIBE","Resp. Produzione CARIBE",5],
+["Manuel Fabbri","Manutenzione Impianti","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Manutenzione preventiva e correttiva macchinari","Resp. Produzione ITA",5],
+["Marco Carzaniga","Manutenzione Impianti","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Manutenzione preventiva e correttiva macchinari","Resp. Produzione ITA",5],
+["Suarez","Manutenzione Impianti","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Manutenzione preventiva e correttiva macchinari","Resp. Produzione ESP",5],
+["Villegas","Manutenzione Impianti","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Manutenzione preventiva e correttiva macchinari","Resp. Produzione ESP",5],
+["Sepulveda","Manutenzione Impianti","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Manutenzione preventiva e correttiva macchinari","Resp. Produzione ESP",5],
+["F.M. De Gaetano","Controllo Qualità & Laboratorio","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Analisi prodotto, test fisico-chimici, validazione lotti","Resp. Qualità ITA",5],
+["Mabel / Lucia / Marina","Controllo Qualità & Laboratorio","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Analisi prodotto, test fisico-chimici, validazione lotti","Resp. Qualità ESP",5],
+["Nieve Vallejo","Controllo Qualità & Laboratorio","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Analisi prodotto, test fisico-chimici, validazione lotti","Resp. Qualità CARIBE",5],
+["Camilla Vassura","Gestione Magazzino","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione ITA",6],
+["Luca Fabbri","Gestione Magazzino","4. Operations & Supply Chain","🇮🇹 ITA","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione ITA",6],
+["Jerry","Gestione Magazzino","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione ESP",6],
+["Diego Gonzalez","Gestione Magazzino","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione ESP",6],
+["Diego González Jr.","Gestione Magazzino","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione ESP",6],
+["Antonio Pizarro","Gestione Magazzino","4. Operations & Supply Chain","🇪🇸 ESP","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione ESP",6],
+["Pablo Rosario","Gestione Magazzino","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Ricevimento, stoccaggio, picking, inventari","Resp. Produzione CARIBE",6],
+["Joel","Gestione Magazzino (baja médica)","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Gestione magazzino CARIBE","Resp. Produzione CARIBE",6],
+["Hugo","Chofer de Camión","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Consegne e distribuzione CARIBE","MD Caribe",6],
+["Manuel","Ayudante de Camión","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Supporto consegne e distribuzione CARIBE","MD Caribe",6],
+["Domingo","Mensajero","4. Operations & Supply Chain","🏝 CARIBE","Operativo","Servizi di messaggistica CARIBE","MD Caribe",6],
+["Salva Nebro","Controller Spain","7. Finance & Amministrazione","🇪🇸 ESP","Manager","P&L mensile Spagna, analisi scostamenti, report direzionali","MD Spagna / CFO",4],
+["Riccardo Liverani","Controlling ITA (interim)","7. Finance & Amministrazione","🇮🇹 ITA","Staff","Controlling ITA interim — Lia rientra giugno 2026","MD Italia / CFO",4],
+["Lia Naldoni","Controller ITA (in formazione)","7. Finance & Amministrazione","🇮🇹 ITA","Staff","In formazione Controller ITA — maternità, rientro giugno","MD Italia / CFO",4],
+["Encarnación Perianez","Controlling + Tesorería + Admin ESP","7. Finance & Amministrazione","🇪🇸 ESP","Staff","Controlling + Tesorería + Admin ESP","MD Spagna / CFO",4],
+["Milagros Martinez","Controller CARIBE","7. Finance & Amministrazione","🏝 CARIBE","Staff","Controlling CARIBE — P&L mensile","MD Caribe / CFO",4],
+["Noemi (Global)","Contabilità GLOBAL","7. Finance & Amministrazione","🌐 GLOBAL","Staff","Contabilità generale GLOBAL","CFO",4],
+["Florinda Miniati","Contabilità & Amministrazione","7. Finance & Amministrazione","🇮🇹 ITA","Staff","Contabilità, adempimenti fiscali ITA","MD Italia / CFO",4],
+["Paolo Sartoni","Contabilità & Amministrazione","7. Finance & Amministrazione","🇮🇹 ITA","Staff","Contabilità, adempimenti fiscali ITA","MD Italia / CFO",4],
+["Simona Sforza","Contabilità & Amministrazione","7. Finance & Amministrazione","🇮🇹 ITA","Staff","Contabilità, adempimenti fiscali ITA","MD Italia / CFO",4],
+["Noemi (ESP)","Contabilità & Amministrazione","7. Finance & Amministrazione","🇪🇸 ESP","Staff","Contabilità, adempimenti fiscali ESP","MD Spagna / CFO",4],
+["Nazareth","Contabilità & Amministrazione","7. Finance & Amministrazione","🇪🇸 ESP","Staff","Contabilità, adempimenti fiscali ESP","MD Spagna / CFO",4],
+["Guadalupe","Contabilità + Admin Personale","7. Finance & Amministrazione","🇪🇸 ESP","Staff","Contabilità ESP + Amministrazione Personale","MD Spagna / CFO",4],
+["Luz Paulino","Contabilità + Tesorería + Admin","7. Finance & Amministrazione","🏝 CARIBE","Staff","Contabilità + Tesorería + Admin Personale CARIBE","MD Caribe / CFO",4],
+["JOSMELIS ALMONTE","Contabilità & Amministrazione","7. Finance & Amministrazione","🏝 CARIBE","Staff","Contabilità generale CARIBE","MD Caribe / CFO",4],
+["Pilar","Tesoreria GLOBAL","7. Finance & Amministrazione","🌐 GLOBAL","Manager","Cash flow globale, rapporti banche","CFO",4],
+["Diego Leiva","CRM & Data Management GLOBAL","9. IT & Digital","🌐 GLOBAL","Staff","Gestione CRM, qualità dato, training utenti","IT Manager",5],
+["Lia Naldoni","CRM & Data ITA","9. IT & Digital","🇮🇹 ITA","Staff","CRM ITA + agenzia — maternità, rientro giugno","IT Manager",5],
+["Juan Leiva","CRM Digital ESP","9. IT & Digital","🇪🇸 ESP","Staff","CRM ESP — funzione secondaria","IT Manager",5],
+];
+
+/* ── Build people objects (keep ALL rows — allow multi-role) ── */
+const people=RAW.map(r=>({nome:r[0],ruolo:r[1],area:r[2],paese:r[3],livello:r[4],resp:r[5],riporta:r[6],lv:r[7]}));
+
+/* For nav/search: deduplicate by nome (first occurrence) */
+const byName={};
+people.forEach(p=>{ if(!byName[p.nome]) byName[p.nome]=p; });
+const uniq=Object.values(byName);
+
+/* ── TEAM KEYS: person name → riporta keys they own ── */
+const TK={
+  "Curro":["CEO"],
+  "Christian Creati":["COO"],
+  "Alfonso Roldan":["CFO","MD Italia / CFO","MD Spagna / CFO","MD Caribe / CFO"],
+  "Antonio Cordoba":["Dir. Comm. Spain","Antonio Cordoba","IT Manager"],
+  "Federico Ragusa":["Dir. Comm. EMEA/ITA"],
+  "Francisco Suarez":["Dir. Comm. LATAM"],
+  "Mattia Longhin":["KAM ITA"],
+  "Carlotta Manicardi":["Trade Marketing"],
+  "Riccardo Liverani":["MD Italia","MD Italia / CFO"],
+  "Francisco Leal (Paco)":["MD Spagna","MD Spagna / CFO"],
+  "Luis Prieto":["MD Caribe","MD Caribe / CFO"],
+  "Gabriele Rubertucci":["Resp. Produzione ITA"],
+  "Daniel Cobo":["Resp. Produzione ESP"],
+  "Jairo Adon":["Resp. Produzione CARIBE"],
+  "Enrico Limoncini":["Resp. Qualità ITA"],
+  "Rebeca Pelez":["Resp. Qualità ESP"],
+  "Ennis Caro":["Resp. Qualità CARIBE"],
+};
+
+/* ── RIPORTA → display name ── */
+const RN={
+  "—":"—","CEO":"Curro","COO":"Christian Creati","CFO":"Alfonso Roldan",
+  "Dir. Comm. EMEA/ITA":"Federico Ragusa","Dir. Comm. LATAM":"Francisco Suarez",
+  "Dir. Comm. Spain":"Antonio Cordoba","KAM ITA":"Mattia Longhin",
+  "Trade Marketing":"Carlotta Manicardi","MD Italia":"Riccardo Liverani",
+  "MD Spagna":"Francisco Leal (Paco)","MD Caribe":"Luis Prieto",
+  "Resp. Produzione ITA":"Gabriele Rubertucci","Resp. Produzione ESP":"Daniel Cobo",
+  "Resp. Produzione CARIBE":"Jairo Adon","Resp. Qualità ITA":"Enrico Limoncini",
+  "Resp. Qualità ESP":"Rebeca Pelez","Resp. Qualità CARIBE":"Ennis Caro",
+  "Antonio Cordoba":"Antonio Cordoba","IT Manager":"IT Manager (vacante)",
+  "MD Italia / CFO":"Riccardo Liverani / Alfonso Roldan",
+  "MD Spagna / CFO":"Francisco Leal (Paco) / Alfonso Roldan",
+  "MD Caribe / CFO":"Luis Prieto / Alfonso Roldan",
+  "COO / CEO":"Christian Creati / Curro","MD":"MD locale","Board":"Board",
+};
+
+function getTeam(p){
+  const keys=TK[p.nome]||[];
+  if(!keys.length) return [];
+  /* Deduplicate by nome+riporta so same person with SAME role appears once
+     but same person with DIFFERENT roles (multi-role) appears multiple times */
+  const seen=new Set();
+  return people.filter(q=>{
+    if(q.nome===p.nome) return false;
+    if(!keys.some(k=>q.riporta===k||q.riporta.startsWith(k))) return false;
+    const key=q.nome+"||"+q.ruolo;
+    if(seen.has(key)) return false;
+    seen.add(key); return true;
+  });
+}
+
+function getParent(p){
+  if(!p.riporta||p.riporta==="—"||p.riporta==="Board") return null;
+  const k=p.riporta.split("/")[0].trim();
+  const n=RN[p.riporta]||RN[k];
+  if(!n||n.includes("/")) return null;
+  return byName[n]||null;
+}
+
+/* ── VISUAL HELPERS ── */
+const ACOLS=["#1B3A6B","#2E5FA3","#0F6E56","#854F0B","#6D2E46","#185FA5","#3B6D11","#0D6B8E"];
+const areas=[...new Set(people.map(p=>p.area))];
+const acol=a=>ACOLS[areas.indexOf(a)%ACOLS.length];
+const ini=n=>n.replace(/[^a-zA-ZÀ-ÿ ]/g,'').split(' ').filter(Boolean).slice(0,2).map(w=>w[0].toUpperCase()).join('')||n[0].toUpperCase();
+
+function cardInner(p,focus=false){
+  const c=acol(p.area),i=ini(p.nome);
+  const avSz=focus?50:36,fnSz=focus?15:13;
+  const rn=RN[p.riporta]||p.riporta;
+  /* Get all roles for this person (multi-role display) */
+  const allRoles=people.filter(q=>q.nome===p.nome).map(q=>q.ruolo);
+  const roleDisplay=focus && allRoles.length>1
+    ? allRoles.map(r=>`<div style="font-size:11px;color:#6B8BAF;margin-top:2px">${r}</div>`).join("")
+    : `<div class="cr">${p.ruolo}</div>`;
+  return `
+  <div class="ch">
+    <div class="av" style="width:${avSz}px;height:${avSz}px;font-size:${focus?15:11}px;background:${c}18;color:${c};flex-shrink:0">${i}</div>
+    <div style="flex:1;min-width:0">
+      <div class="cn" style="font-size:${fnSz}px">${p.nome}</div>
+      ${roleDisplay}
+      <div class="cp">${p.paese} · L${p.lv} · ${p.livello}</div>
+    </div>
+  </div>
+  ${focus?`<div class="crsec">${p.resp}</div><div class="rip">Riporta a: <strong>${rn}</strong></div>`:''}`;
+}
+
+/* ══════════════════ STATE & NAVIGATION ══════════════════════════ */
+let current=byName["Curro"],history=[];
+
+function focusOn(p,push=true){
+  if(push&&current) history.push(current);
+  current=p;
+  document.getElementById("search").value="";
+  document.getElementById("sdrop").classList.remove("open");
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function goBack(){
+  if(!history.length) return;
+  current=history.pop();
+  document.getElementById("search").value="";
+  render();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ══════════════════ RENDER ═════════════════════════════════════ */
+function render(){
+  const boss=getParent(current);
+  const team=getTeam(current);
+  const ov=document.getElementById("ov");
+  const bb=document.getElementById("backbar");
+  const bbN=document.getElementById("bb-name");
+  const bbR=document.getElementById("bb-role");
+
+  /* Back bar */
+  if(history.length){
+    const prev=history[history.length-1];
+    bb.classList.add("show");
+    bbN.textContent="Torna a "+prev.nome;
+    bbR.textContent="· "+prev.ruolo;
+    bb.onclick=goBack;
+  } else {
+    bb.classList.remove("show");
+  }
+
+  let h="";
+
+  /* BOSS (clicking goes up one level = same as back) */
+  if(boss){
+    h+=`<div class="boss-wrap">
+      <div class="card boss-c" id="boss-c">
+        <div class="up-hint">↑ vai su</div>
+        ${cardInner(boss)}
+      </div>
+    </div>
+    <div class="conn"></div>`;
+  }
+
+  /* FOCUS */
+  /* Show ALL roles of this person if multi-role */
+  const allRolesOfCurrent=people.filter(q=>q.nome===current.nome);
+  const multiRole=allRolesOfCurrent.length>1;
+  h+=`<div class="card focus-c">${cardInner(current,true)}</div>`;
+
+  /* TEAM — flat list, all direct reports */
+  if(team.length){
+    h+=`<div class="conn"></div>
+    <div class="tl">Team di ${current.nome.split(" ")[0]} <span class="tc-n">${team.length}</span></div>
+    <div class="tgrid">`;
+    team.forEach(p=>{
+      h+=`<div class="card tc" data-nm="${p.nome}" data-rt="${p.riporta}">${cardInner(p)}</div>`;
+    });
+    h+=`</div>`;
+  } else {
+    const par=getParent(current);
+    if(par){
+      const peers=getTeam(par).filter(q=>q.nome!==current.nome);
+      if(peers.length){
+        h+=`<div class="conn"></div>
+        <div class="tl">Colleghi di ${current.nome.split(" ")[0]} <span class="tc-n">${peers.length}</span></div>
+        <div class="tgrid">`;
+        peers.forEach(p=>{
+          h+=`<div class="card tc" data-nm="${p.nome}" data-rt="${p.riporta}">${cardInner(p)}</div>`;
+        });
+        h+=`</div>`;
+      }
+    }
+  }
+
+  ov.innerHTML=h;
+
+  /* Click boss → go up to boss (AND add to history so back works) */
+  const bc2=ov.querySelector("#boss-c");
+  if(bc2) bc2.onclick=()=>{ focusOn(boss); };
+
+  /* Click team card → focus on that person */
+  ov.querySelectorAll(".tc[data-nm]").forEach(el=>{
+    el.onclick=()=>{
+      const p=byName[el.dataset.nm];
+      if(p) focusOn(p);
+    };
+  });
+}
+
+/* ══════════════════ SEARCH ════════════════════════════════════ */
+const src=document.getElementById("search"),dr=document.getElementById("sdrop");
+src.addEventListener("input",()=>{
+  const q=src.value.toLowerCase().trim();
+  if(!q){dr.classList.remove("open");return;}
+  const res=uniq.filter(p=>
+    p.nome.toLowerCase().includes(q)||
+    p.ruolo.toLowerCase().includes(q)||
+    p.paese.toLowerCase().includes(q)
+  ).slice(0,10);
+  if(!res.length){dr.classList.remove("open");return;}
+  dr.innerHTML=res.map(p=>{
+    const c=acol(p.area),i=ini(p.nome);
+    const allR=people.filter(q=>q.nome===p.nome).map(q=>q.ruolo).join(" · ");
+    return `<div class="si-item" data-nm="${p.nome}">
+      <div class="si-av" style="background:${c}18;color:${c}">${i}</div>
+      <div><div class="si-nm">${p.nome}</div><div class="si-mt">${allR} · ${p.paese}</div></div>
+    </div>`;
+  }).join("");
+  dr.classList.add("open");
+  dr.querySelectorAll(".si-item").forEach(el=>{
+    el.onclick=()=>{
+      const p=byName[el.dataset.nm];
+      if(p){history=[];focusOn(p,false);}
+    };
+  });
+});
+document.addEventListener("click",e=>{if(!e.target.closest(".sw")) dr.classList.remove("open");});
+
+/* init */
+document.getElementById("tot").textContent=uniq.length+" persone · "+people.length+" ruoli";
+render();
+</script>
+</body>
+</html>
